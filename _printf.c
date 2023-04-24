@@ -1,50 +1,50 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdarg.h>
 
 /**
- * _printf - Printd formatted data to stdout
- * @format: string
- * Return: Number of characters dispalyed
- */
+* _printf - prints formatted output to stdout
+* @format: A character string
+*Return: The number of characters printed
+*/
 
-int _printf(char *format, ...)
+int _printf(const char *format, ...)
 {
-int statement = 0, (structype)(char *, va_list);
-char q[3];
-va_list pa;
-if (format == NULL)
-return (-1);
-q[2] = '\0';
-va_start(pa, format);
-_putchar(-1);
-while (format[0])
+va_list args;
+va_start(args, format);
+
+int num_chars_printed = 0;
+
+for (int i = 0; format[i] != '\0'; i++)
 {
-if (format[0] == '%')
+if (format[i] == '%')
 {
-structype = driver(format);
-if (structype)
+i++;
+
+if (format[i] == '%')
 {
-q[0] = '%';
-q[1] = format[1];
-statement += structype(q, pa);
+putchar('%');
+num_chars_printed++;
 }
-else if (format[1] != '\0')
+else if (format[i] == 'c')
 {
-statement += _putchar('%');
-statement += _putchar(format[1]);
+char c = va_arg(args, int);
+putchar(c);
+num_chars_printed++;
+}
+else if (format[i] == 's')
+{
+char *s = va_arg(args, char *);
+fputs(s,stdout);
+num_chars_printed += strlen(s);
+}
 }
 else
 {
-statement += _putchar('%');
-break;
-}
-format += 2;
-}
-else
-{
-statement += _putchar(format[0]);
-format++;
+putchar(format[i]);
+num_chars_printed++;
 }
 }
-_putchar(-2);
-return (statement);
+va-end(args);
+return (num_char_printed);
 }
