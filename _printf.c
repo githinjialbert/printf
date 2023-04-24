@@ -1,6 +1,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdarg.h>
+#include <string.h>
 
 /**
 * _printf - prints formatted output to stdout
@@ -10,33 +11,37 @@
 
 int _printf(const char *format, ...)
 {
+int num_chars_printed = 0;
+int i;
 va_list args;
 va_start(args, format);
-
-int num_chars_printed = 0;
-
-for (int i = 0; format[i] != '\0'; i++)
+for (i = 0; format[i] != '\0'; i++)
 {
 if (format[i] == '%')
 {
 i++;
-
-if (format[i] == '%')
+switch (format[i])
 {
-putchar('%');
-num_chars_printed++;
-}
-else if (format[i] == 'c')
+case 'c':
 {
 char c = va_arg(args, int);
 putchar(c);
 num_chars_printed++;
+break;
 }
-else if (format[i] == 's')
+case 's':
 {
-char *s = va_arg(args, char *);
-fputs(s,stdout);
+char *s = va_arg(args, char*);
 num_chars_printed += strlen(s);
+fputs(s, stdout);
+break;
+}
+case '%':
+{
+putchar('%');
+num_chars_printed++;
+break;
+}
 }
 }
 else
@@ -45,6 +50,6 @@ putchar(format[i]);
 num_chars_printed++;
 }
 }
-va-end(args);
-return (num_char_printed);
+va_end(args);
+return (num_chars_printed);
 }
