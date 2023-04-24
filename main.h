@@ -1,5 +1,5 @@
-#ifndef HOLBERTON_H
-#define HOLBERTON_H
+#ifndef MAIN_H
+#define MAIN_H
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -31,6 +31,7 @@ int _abs(int number);int printhex(char *format, va_list);
 int printHEX(char *format, va_list);
 int printocta(char *format, va_list);
 int print_unsign(char *format, va_list);
+int printpercent(char *format, va_list pa);
 
 #endif
-int printpercent(char *format, va_list pa);
+
