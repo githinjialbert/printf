@@ -2,35 +2,32 @@
 #define MAIN_H
 
 #include <stdarg.h>
-#include <stddef.h>
-#include <stdlib.h>
 
-/**
- * struct structprint - structure containing
- * @q: the location and method to translate data to characters.
- * @u: print function for specific type.
- *
- * Return: int
- */
-typedef struct structprint
-{
-char *q;
-int (*u)(char *format, va_list);
-} structype;
-
-int _putchar(char ch);
-int _puts(char *string);
-int printc(char *format, va_list);
-int printstr(char *format, va_list);
-int (*driver(char *format))(char *format, va_list);
 int _printf(const char *format, ...);
-int printint(char *format, va_list pa);
-int integer(int number);
-int contadordigit(int number);
-int _abs(int number);int printhex(char *format, va_list);
-int printHEX(char *format, va_list);
-int printocta(char *format, va_list);
-int print_unsign(char *format, va_list);
-int printpercent(char *format, va_list pa);
+/**
+*struct format - data type of format
+*@op: format
+*@f: function
+*/
+typedef struct format
+{
+	char *op;
+	int (*f)(va_list print);
+}
+Myprint;
+int _putchar(char c);
+int op_character(va_list form);
+int op_string(va_list form);
+int op_integer(va_list form);
+int op_reverse(va_list form);
+int op_rot13(va_list form);
+int validator(const char *format, va_list print1, Myprint *ops1);
+int op_binary(va_list form);
+int op_octal(va_list form);
+int op_unsigned_decimal(va_list form);
+int op_hex(va_list form);
+int op_HEX(va_list form);
+int op_SString(va_list form);
+int op_address(va_list form);
 
 #endif

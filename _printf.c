@@ -1,55 +1,34 @@
-#include "main.h"
 #include <stdio.h>
 #include <stdarg.h>
-#include <string.h>
-
+#include "main.h"
 /**
-* _printf - prints formatted output to stdout
-* @format: A character string
-*Return: The number of characters printed
+*_printf - produces output
+*@format: pointer
+*Return: always 0
 */
-
 int _printf(const char *format, ...)
 {
-int num_chars_printed = 0;
-int i;
-va_list args;
-va_start(args, format);
-for (i = 0; format[i] != '\0'; i++)
-{
-if (format[i] == '%')
-{
-i++;
-switch (format[i])
-{
-case 'c':
-{
-char c = va_arg(args, int);
-putchar(c);
-num_chars_printed++;
-break;
-}
-case 's':
-{
-char *s = va_arg(args, char*);
-num_chars_printed += strlen(s);
-fputs(s, stdout);
-break;
-}
-case '%':
-{
-putchar('%');
-num_chars_printed++;
-break;
-}
-}
-}
-else
-{
-putchar(format[i]);
-num_chars_printed++;
-}
-}
-va_end(args);
-return (num_chars_printed);
+	va_list(print);
+	int count = 0;
+	Myprint ops[] = {
+		{"c", op_character},
+		{"s", op_string},
+		{"i", op_integer},
+		{"d", op_integer},
+		{"r", op_reverse},
+		{"R", op_rot13},
+		{"b", op_binary},
+		{"o", op_octal},
+		{"u", op_unsigned_decimal},
+		{"x", op_hex},
+		{"X", op_HEX},
+		{"S", op_SString},
+		{"p", op_address},
+	};
+	if (format == NULL)
+		return (-1);
+	va_start(print, format);
+	count = validator(format, print, ops);
+	va_end(print);
+	return (count);
 }
