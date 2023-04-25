@@ -1,50 +1,38 @@
+#include <stdio.h>
+#include <stdarg.h>
 #include "main.h"
 
 /**
- * _printf - prints formatted data to stdout
- * @format: string that contains the format to print
- * Return: number of characters written
+ * _printf - Function that produces output according to a format.
+ * @format: Pointer
+ * Return: Always 0
  */
-int _printf(char *format, ...)
-{
-int written = 0, (*structype)(char *, va_list);
-char q[3];
-va_list pa;
 
+int _printf(const char *format, ...)
+{
+va_list print;
+int count = 0;
+
+MyPrint ops[] = {
+{"c", op_character},
+{"s", op_string},
+{"i", op_integer},
+{"d", op_integer},
+{"r", op_reverse},
+{"R", op_rot13},
+{"b", op_binary},
+{"o", op_octal},
+{"u", op_unsigned_decimal},
+{"x", op_hex},
+{"X", op_HEX},
+{"S", op_SString},
+{"p", op_address},
+};
 if (format == NULL)
 return (-1);
-q[2] = '\0';
-va_start(pa, format);
-_putchar(-1);
-while (format[0])
-{
-if (format[0] == '%')
-{
-structype = driver(format);
-if (structype)
-{
-q[0] = '%';
-q[1] = format[1];
-written += structype(q, pa);
-}
-else if (format[1] != '\0')
-{
-written += _putchar('%');
-written += _putchar(format[1]);
-}
-else
-{
-written += _putchar('%');
-break;
-}
-format += 2;
-}
-else
-{
-written += _putchar(format[0]);
-format++;
-}
-}
-_putchar(-2);
-return (written);
+va_start(print, format);
+count = validator(format, print, ops);
+va_end(print);
+
+return (count);
 }
