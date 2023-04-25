@@ -10,7 +10,7 @@ int op_SString(va_list form)
 {
 	int count = 0, i = 0;
 	int divide; 
-	int module;
+	int module = 0;
 	char ascii;
 	char *str = va_arg(form, char *);
 
